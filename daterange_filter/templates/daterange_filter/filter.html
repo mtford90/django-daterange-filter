@@ -3,10 +3,14 @@
 {{ spec.form.media }}
 <style>
 	.calendarbox {
-		margin-left: -251px;
+		margin-left: -200px;
+		z-index: 1000;
+	}
+	.daterange_form input {
+		width: 100%;
 	}
 </style>
-<form method="GET" action="">
+<form class='daterange_form' method="GET" action="">
 	{{ spec.form.as_p }}
 	<p>
 	<input type="submit" value="{% trans "Search" %}">
