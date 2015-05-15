@@ -1,29 +1,54 @@
-{% load i18n admin_static %}
-<h3>{% blocktrans with filter_title=title %} By {{ filter_title }} {% endblocktrans %}</h3>
-<link rel="stylesheet" type="text/css" href="{% static "admin/css/widgets.css" %}" />
-<style>
-    .calendarbox, .clockbox {
-        /* Make sure the calendar widget popover displays in front of the sidebar */
-        z-index: 1100;
-        margin-left: -251px;
-    }
-    .datetimeshortcuts a{
-        /* Make text for "Today" a bit smaller so it appears on one line. */
-        font-size: 8pt;
+{% load i18n %}
+{% load i18n admin_urls admin_static admin_list %}
+
+{{ spec.form.media }}
+
+
+{% block extrahead %}
+  <style>
+
+    .ui-datepicker-div {
+      top: 246px;
     }
 
-    .daterangefilter input{
-        width: 90%;
+    .daterange_form p {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 5px;
     }
-</style>
-<form method="GET" action="">
-    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
-    {{ spec.form.media }}
-    <div class="daterangefilter">
-        {{ spec.form.as_p }}
-    </div>
-    <p>
-    <input type="submit" value="{% trans "Search" %}">
-    <input type="reset" value="{% trans "Clear" %}">
-    </p>
+
+    .daterange_form input.grp-button-time {
+      width: 20%;
+      height: auto;
+    }
+
+    .grp-button-time {
+      float: right;
+      width: 55px !important;
+    }
+  </style>
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript" charset="utf-8">
+    (function ($) {
+      $(document).ready(function () {
+        grappelli.initDateAndTimePicker();
+        setTimeout(grappelli.initDateAndTimePicker, 1000);
+      });
+    })(grp.jQuery);
+  </script>
+{% endblock %}
+
+
+<form class='daterange_form grp-module'
+      method="GET"
+      action=""
+      accept-charset="utf-8"
+      enctype="text/plain">
+  <div class='grp-row'>
+    <label>Date Range</label>
+    {{ spec.form.as_p }}
+    <input type="submit" class="grp-button-time" value="{% trans "Filter" %}">
+  </div>
 </form>
